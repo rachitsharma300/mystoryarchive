@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-cormorant);
+  --font-sans-clean: var(--font-dm-sans);
+}
+
 @layer base {
   :root {
     --background: 0 0% 98%;
@@ -41,12 +47,12 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-cormorant), Georgia, serif;
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--font-playfair), Georgia, serif;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
@@ -54,13 +60,13 @@
 
 @layer utilities {
   .font-display {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--font-playfair), Georgia, serif;
   }
   .font-body {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-cormorant), Georgia, serif;
   }
   .font-sans-clean {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-dm-sans), sans-serif;
   }
   .text-gold {
     color: hsl(var(--gold));
