@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Package, Truck, CheckCircle, Clock, MapPin, Phone, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type TrackingStatus = "processing" | "designed" | "dispatched" | "out_for_delivery" | "delivered";
 
@@ -146,17 +147,18 @@ export default function TrackOrderPage() {
               placeholder="e.g. MV001 or try MV002"
               className="flex-1 px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 font-sans-clean text-sm text-stone-800 placeholder-stone-300 outline-none focus:border-amber-400 focus:bg-white transition-all"
             />
-            <button
+            <Button
               onClick={handleTrack}
               disabled={loading}
-              className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-sans-clean font-semibold rounded-xl transition-all duration-300 flex items-center gap-2 disabled:opacity-70"
+              size="lg"
+              variant="default"
             >
               {loading
                 ? <RefreshCw size={16} className="animate-spin" />
                 : <Search size={16} />
               }
               {loading ? "Tracking..." : "Track"}
-            </button>
+            </Button>
           </div>
           {error && (
             <motion.p
