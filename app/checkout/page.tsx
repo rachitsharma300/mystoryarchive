@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ChevronLeft, Shield, Lock, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const productData: Record<string, { name: string; price: number; emoji: string; deliveryDays: string }> = {
   "custom-magazine": { name: "Custom Magazine", price: 1200, emoji: "📖", deliveryDays: "7-10 days" },
@@ -104,17 +105,18 @@ function CheckoutForm() {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <a
-              href="https://wa.me/917903316723"
-              target="_blank"
-              rel="noreferrer"
-              className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-sans-clean font-semibold rounded-xl transition-all"
-            >
-              💬 Chat on WhatsApp
-            </a>
-            <Link href="/shop" className="w-full py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 font-sans-clean font-semibold rounded-xl transition-all">
-              Continue Shopping
-            </Link>
+            <Button asChild size="lg" variant="default" className="w-full">
+              <a
+                href="https://wa.me/917903316723"
+                target="_blank"
+                rel="noreferrer"
+              >
+                💬 Chat on WhatsApp
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="secondary" className="w-full">
+              <Link href="/shop">Continue Shopping</Link>
+            </Button>
           </div>
         </motion.div>
       </div>
@@ -126,10 +128,12 @@ function CheckoutForm() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Back */}
-        <Link href={"/product/" + slug} className="inline-flex items-center gap-2 font-sans-clean text-sm text-stone-500 hover:text-amber-500 transition-colors mb-8">
-          <ChevronLeft size={16} />
-          Back to product
-        </Link>
+        <Button asChild variant="ghost" size="sm" className="inline-flex items-center gap-2">
+          <Link href={"product/" + slug}>
+            <ChevronLeft size={16} />
+            Back to product
+          </Link>
+        </Button>
 
         {/* Steps indicator */}
         <div className="flex items-center gap-3 mb-10">
@@ -287,12 +291,9 @@ function CheckoutForm() {
                   </div>
                 </div>
 
-                <button
-                  onClick={handleContinue}
-                  className="mt-6 w-full py-4 bg-amber-500 hover:bg-amber-600 text-white font-sans-clean font-bold text-base rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-200"
-                >
+                <Button onClick={handleContinue} size="lg" variant="default" className="w-full">
                   Continue to Payment
-                </button>
+                </Button>
               </motion.div>
             )}
 
