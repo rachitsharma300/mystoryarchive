@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Menu, X, Heart, User, Package } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -71,40 +72,43 @@ export default function Navbar() {
 
             {/* Right Icons */}
             <div className="flex items-center gap-3">
-              <Link
-                href="/dashboard"
-                className="hidden sm:flex p-2 text-stone-500 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-200"
-              >
-                <User size={18} />
-              </Link>
-              <Link
-                href="/wishlist"
-                className="hidden sm:flex p-2 text-stone-500 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-200"
-              >
-                <Heart size={18} />
-              </Link>
-              <Link
-                href="/track-order"
-                className="hidden sm:flex p-2 text-stone-500 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-200"
-              >
-                <Package size={18} />
-              </Link>
-              <Link href="/cart" className="relative p-2 text-stone-500 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-200">
-                <ShoppingCart size={18} />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 text-white text-[10px] rounded-full flex items-center justify-center font-sans-clean font-bold">
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
+              <Button asChild variant="ghost" size="icon">
+                <Link href="/dashboard">
+                  <User size={18} />
+                </Link>
+              </Button>
+              <Button asChild variant="ghost" size="icon">
+                <Link href="/wishlist">
+                  <Heart size={18} />
+                </Link>
+              </Button>
+              <Button asChild variant="ghost" size="icon">
+                <Link href="/track-order">
+                  <Package size={18} />
+                </Link>
+              </Button>
+              <Button asChild variant="ghost" size="icon">
+                <Link href="/cart">
+                  <div className="relative">
+                    <ShoppingCart size={18} />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 text-white text-[10px] rounded-full flex items-center justify-center font-sans-clean font-bold">
+                        {cartCount}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              </Button>
 
               {/* Mobile Menu Button */}
-              <button
+              <Button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 text-stone-600 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all"
+                variant="ghost"
+                size="icon"
+                className="lg:hidden"
               >
                 {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
