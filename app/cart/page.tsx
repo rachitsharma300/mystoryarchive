@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, Plus, Minus, ShoppingBag, CreditCard, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type CartItem = {
   slug: string;
@@ -93,13 +94,12 @@ export default function CartPage() {
               Ready to archive your memories?
             </h1>
           </div>
-          <Link
-            href="/shop"
-            className="inline-flex items-center gap-2 px-5 py-3 bg-stone-900 hover:bg-amber-500 text-white font-sans-clean font-semibold rounded-full transition-all duration-300"
-          >
-            <ShoppingBag size={18} />
-            Continue Shopping
-          </Link>
+          <Button asChild size="lg" variant="default" className="inline-flex items-center gap-2">
+            <Link href="/shop">
+              <ShoppingBag size={18} />
+              Continue Shopping
+            </Link>
+          </Button>
         </div>
 
         {cartItems.length === 0 ? (
@@ -115,12 +115,9 @@ export default function CartPage() {
             <p className="font-sans-clean text-stone-500 mb-8 max-w-xl mx-auto">
               Add a keepsake from the shop to start building your memory collection.
             </p>
-            <Link
-              href="/shop"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-sans-clean font-semibold rounded-full transition-all duration-300"
-            >
-              Browse Products
-            </Link>
+            <Button asChild size="lg" variant="default">
+              <Link href="/shop">Browse Products</Link>
+            </Button>
           </motion.div>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-[1.6fr_0.9fr] gap-8">
@@ -135,12 +132,14 @@ export default function CartPage() {
                       Review your selections
                     </h2>
                   </div>
-                  <button
+                  <Button
                     onClick={clearCart}
-                    className="text-sm text-stone-500 hover:text-amber-500 transition-colors font-semibold"
+                    variant="ghost"
+                    size="sm"
+                    className="text-stone-500 hover:text-amber-500"
                   >
                     Clear cart
-                  </button>
+                  </Button>
                 </div>
 
                 <div className="space-y-5">
@@ -174,28 +173,34 @@ export default function CartPage() {
 
                           <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2 rounded-2xl bg-white border border-stone-200 overflow-hidden shadow-sm">
-                              <button
+                              <Button
                                 onClick={() => updateQuantity(item.slug, -1)}
-                                className="h-11 w-11 text-stone-600 hover:text-amber-600 transition-colors"
+                                variant="ghost"
+                                size="icon"
+                                className="text-stone-600 hover:text-amber-600"
                               >
                                 <Minus size={16} />
-                              </button>
+                              </Button>
                               <span className="min-w-[46px] text-center font-sans-clean font-semibold text-stone-900">
                                 {item.qty}
                               </span>
-                              <button
+                              <Button
                                 onClick={() => updateQuantity(item.slug, 1)}
-                                className="h-11 w-11 text-stone-600 hover:text-amber-600 transition-colors"
+                                variant="ghost"
+                                size="icon"
+                                className="text-stone-600 hover:text-amber-600"
                               >
                                 <Plus size={16} />
-                              </button>
+                              </Button>
                             </div>
-                            <button
+                            <Button
                               onClick={() => removeItem(item.slug)}
-                              className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-red-500 transition-colors"
+                              variant="ghost"
+                              size="sm"
+                              className="text-stone-500 hover:text-red-500"
                             >
                               <Trash2 size={16} /> Remove
-                            </button>
+                            </Button>
                           </div>
 
                           <div className="text-right">
@@ -221,14 +226,11 @@ export default function CartPage() {
                     <p className="text-sm text-stone-500">Chat with us on WhatsApp anytime for product recommendations.</p>
                   </div>
                 </div>
-                <Link
-                  href="https://wa.me/917903316723"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center w-full rounded-2xl bg-stone-900 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-amber-500"
-                >
-                  Chat with support
-                </Link>
+                <Button asChild size="lg" variant="default" className="w-full">
+                  <a href="https://wa.me/917903316723" target="_blank" rel="noreferrer">
+                    Chat with support
+                  </a>
+                </Button>
               </div>
             </div>
 
@@ -266,12 +268,11 @@ export default function CartPage() {
                 </div>
 
                 <div className="mt-6 space-y-3">
-                  <Link
-                    href={`/checkout?product=${cartItems[0]?.slug || "custom-magazine"}&qty=${cartItems[0]?.qty || 1}&occasion=${encodeURIComponent(cartItems[0]?.occasion || "Custom")}`}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-amber-500 px-5 py-4 text-sm font-semibold text-white transition-all hover:bg-amber-600"
-                  >
-                    <CreditCard size={18} /> Proceed to Checkout
-                  </Link>
+                  <Button asChild size="lg" variant="default" className="w-full">
+                    <Link href={`/checkout?product=${cartItems[0]?.slug || "custom-magazine"}&qty=${cartItems[0]?.qty || 1}&occasion=${encodeURIComponent(cartItems[0]?.occasion || "Custom")}`}>
+                      <CreditCard size={18} /> Proceed to Checkout
+                    </Link>
+                  </Button>
                   <p className="text-xs text-stone-400">
                     After checkout, our team will reach out to confirm details and start designing your keepsake.
                   </p>
