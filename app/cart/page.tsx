@@ -1,0 +1,298 @@
+﻿"use client";
+
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Trash2, Plus, Minus, ShoppingBag, CreditCard, Sparkles } from "lucide-react";
+
+type CartItem = {
+  slug: string;
+  name: string;
+  emoji: string;
+  price: number;
+  originalPrice: number;
+  qty: number;
+  occasion: string;
+  deliveryDays: string;
+  pages: string;
+  tag: string;
+  tagColor: string;
+};
+
+const initialCartItems: CartItem[] = [
+  {
+    slug: "custom-magazine",
+    name: "Custom Magazine",
+    emoji: "📖",
+    price: 1200,
+    originalPrice: 1800,
+    qty: 1,
+    occasion: "Anniversary",
+    deliveryDays: "7-10 days",
+    pages: "10-30 pages",
+    tag: "Bestseller",
+    tagColor: "bg-amber-100 text-amber-700",
+  },
+  {
+    slug: "recap-reel",
+    name: "Recap Reel",
+    emoji: "🎬",
+    price: 550,
+    originalPrice: 800,
+    qty: 2,
+    occasion: "Birthday",
+    deliveryDays: "2-4 days",
+    pages: "60-90 sec",
+    tag: "New",
+    tagColor: "bg-green-100 text-green-700",
+  },
+];
+
+export default function CartPage() {
+  const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
+
+  const subtotal = useMemo(
+    () => cartItems.reduce((sum, item) => sum + item.price * item.qty, 0),
+    [cartItems]
+  );
+
+  const discount = useMemo(
+    () => cartItems.reduce((sum, item) => sum + (item.originalPrice - item.price) * item.qty, 0),
+    [cartItems]
+  );
+
+  function updateQuantity(slug: string, delta: number) {
+    setCartItems((current) =>
+      current
+        .map((item) =>
+          item.slug === slug
+            ? { ...item, qty: Math.max(1, item.qty + delta) }
+            : item
+        )
+        .filter((item) => item.qty > 0)
+    );
+  }
+
+  function removeItem(slug: string) {
+    setCartItems((current) => current.filter((item) => item.slug !== slug));
+  }
+
+  function clearCart() {
+    setCartItems([]);
+  }
+
+  return (
+    <div className="min-h-screen bg-[#faf9f6] pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
+          <div>
+            <p className="text-xs tracking-widest uppercase text-amber-500 font-bold font-sans-clean mb-2">
+              Your Cart
+            </p>
+            <h1 className="font-display text-4xl lg:text-5xl font-bold text-stone-900">
+              Ready to archive your memories?
+            </h1>
+          </div>
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-2 px-5 py-3 bg-stone-900 hover:bg-amber-500 text-white font-sans-clean font-semibold rounded-full transition-all duration-300"
+          >
+            <ShoppingBag size={18} />
+            Continue Shopping
+          </Link>
+        </div>
+
+        {cartItems.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-3xl border border-stone-200 bg-white p-10 text-center shadow-sm"
+          >
+            <p className="text-6xl mb-6">🛒</p>
+            <h2 className="font-display text-3xl font-bold text-stone-900 mb-3">
+              Your cart is empty.
+            </h2>
+            <p className="font-sans-clean text-stone-500 mb-8 max-w-xl mx-auto">
+              Add a keepsake from the shop to start building your memory collection.
+            </p>
+            <Link
+              href="/shop"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-sans-clean font-semibold rounded-full transition-all duration-300"
+            >
+              Browse Products
+            </Link>
+          </motion.div>
+        ) : (
+          <div className="grid grid-cols-1 xl:grid-cols-[1.6fr_0.9fr] gap-8">
+            <div className="space-y-6">
+              <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+                  <div>
+                    <p className="text-sm uppercase tracking-widest text-stone-400 font-semibold font-sans-clean">
+                      {cartItems.length} items in cart
+                    </p>
+                    <h2 className="font-display text-2xl font-bold text-stone-900">
+                      Review your selections
+                    </h2>
+                  </div>
+                  <button
+                    onClick={clearCart}
+                    className="text-sm text-stone-500 hover:text-amber-500 transition-colors font-semibold"
+                  >
+                    Clear cart
+                  </button>
+                </div>
+
+                <div className="space-y-5">
+                  <AnimatePresence mode="popLayout">
+                    {cartItems.map((item) => (
+                      <motion.div
+                        key={item.slug}
+                        layout
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="rounded-3xl border border-stone-100 bg-stone-50 p-5"
+                      >
+                        <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto] gap-4 items-center">
+                          <div className="flex items-center gap-4">
+                            <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-white text-5xl shadow-sm">
+                              {item.emoji}
+                            </div>
+                            <div>
+                              <p className="font-display text-xl font-bold text-stone-900">
+                                {item.name}
+                              </p>
+                              <p className="text-sm text-stone-500 mt-1">
+                                {item.pages} • {item.deliveryDays}
+                              </p>
+                              <span className={`inline-flex items-center gap-1 mt-3 rounded-full px-3 py-1 text-[11px] font-semibold ${item.tagColor}`}>
+                                {item.tag}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col gap-3">
+                            <div className="flex items-center gap-2 rounded-2xl bg-white border border-stone-200 overflow-hidden shadow-sm">
+                              <button
+                                onClick={() => updateQuantity(item.slug, -1)}
+                                className="h-11 w-11 text-stone-600 hover:text-amber-600 transition-colors"
+                              >
+                                <Minus size={16} />
+                              </button>
+                              <span className="min-w-[46px] text-center font-sans-clean font-semibold text-stone-900">
+                                {item.qty}
+                              </span>
+                              <button
+                                onClick={() => updateQuantity(item.slug, 1)}
+                                className="h-11 w-11 text-stone-600 hover:text-amber-600 transition-colors"
+                              >
+                                <Plus size={16} />
+                              </button>
+                            </div>
+                            <button
+                              onClick={() => removeItem(item.slug)}
+                              className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-red-500 transition-colors"
+                            >
+                              <Trash2 size={16} /> Remove
+                            </button>
+                          </div>
+
+                          <div className="text-right">
+                            <p className="font-display text-2xl font-bold text-stone-900">
+                              ₹{(item.price * item.qty).toLocaleString()}
+                            </p>
+                            <p className="text-sm text-stone-500 line-through">
+                              ₹{(item.originalPrice * item.qty).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center gap-3 mb-5">
+                  <Sparkles size={18} className="text-amber-500" />
+                  <div>
+                    <p className="text-sm font-semibold text-stone-900">Need help choosing?</p>
+                    <p className="text-sm text-stone-500">Chat with us on WhatsApp anytime for product recommendations.</p>
+                  </div>
+                </div>
+                <Link
+                  href="https://wa.me/917903316723"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center w-full rounded-2xl bg-stone-900 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-amber-500"
+                >
+                  Chat with support
+                </Link>
+              </div>
+            </div>
+
+            <aside className="space-y-6">
+              <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <p className="text-sm uppercase tracking-widest text-stone-400 font-semibold font-sans-clean">
+                      Order Summary
+                    </p>
+                    <h2 className="font-display text-2xl font-bold text-stone-900">Secure checkout</h2>
+                  </div>
+                  <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700">
+                    50% advance
+                  </span>
+                </div>
+
+                <div className="space-y-4 text-sm text-stone-600">
+                  <div className="flex justify-between">
+                    <span>Subtotal</span>
+                    <span>₹{subtotal.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Discount</span>
+                    <span className="text-green-600">-₹{discount.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span>Free</span>
+                  </div>
+                  <div className="flex justify-between border-t border-stone-200 pt-4 font-semibold text-stone-900">
+                    <span>Total</span>
+                    <span>₹{subtotal.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                <div className="mt-6 space-y-3">
+                  <Link
+                    href={`/checkout?product=${cartItems[0]?.slug || "custom-magazine"}&qty=${cartItems[0]?.qty || 1}&occasion=${encodeURIComponent(cartItems[0]?.occasion || "Custom")}`}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-amber-500 px-5 py-4 text-sm font-semibold text-white transition-all hover:bg-amber-600"
+                  >
+                    <CreditCard size={18} /> Proceed to Checkout
+                  </Link>
+                  <p className="text-xs text-stone-400">
+                    After checkout, our team will reach out to confirm details and start designing your keepsake.
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-stone-200 bg-stone-50 p-6">
+                <h3 className="font-sans-clean text-sm font-semibold text-stone-800 uppercase tracking-widest mb-4">
+                  Why MemVault?
+                </h3>
+                <ul className="space-y-3 text-sm text-stone-500">
+                  <li>• Handcrafted design for every order</li>
+                  <li>• Free shipping across India</li>
+                  <li>• Dedicated WhatsApp support</li>
+                  <li>• Ready-to-share keepsakes</li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
