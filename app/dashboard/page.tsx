@@ -20,6 +20,7 @@ import {
   ArrowRight,
   Plus,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type TabType = "orders" | "profile" | "wishlist" | "settings";
 
@@ -180,10 +181,10 @@ export default function DashboardPage() {
             </nav>
 
             <div className="mt-8 pt-6 border-t border-stone-200">
-              <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all font-sans-clean text-sm font-medium">
+              <Button variant="destructive" size="sm" className="w-full justify-start gap-3">
                 <LogOut size={16} />
                 Logout
-              </button>
+              </Button>
             </div>
           </motion.aside>
 
@@ -294,13 +295,15 @@ export default function DashboardPage() {
                     <h2 className="font-display text-2xl font-bold text-stone-900">
                       Personal Information
                     </h2>
-                    <button
-                      onClick={() => setIsEditingProfile(!isEditingProfile)}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-amber-600 hover:bg-amber-50 transition-all font-sans-clean text-sm font-semibold"
-                    >
-                      <Edit2 size={16} />
-                      {isEditingProfile ? "Save" : "Edit"}
-                    </button>
+                  <Button
+                    onClick={() => setIsEditingProfile(!isEditingProfile)}
+                    variant="outline"
+                    size="sm"
+                    className="text-amber-600"
+                  >
+                    <Edit2 size={16} />
+                    {isEditingProfile ? "Save" : "Edit"}
+                  </Button>
                   </div>
 
                   {isEditingProfile ? (
@@ -528,9 +531,9 @@ export default function DashboardPage() {
                           className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-stone-50 font-sans-clean text-sm text-stone-800 placeholder-stone-300 outline-none focus:border-amber-400 focus:bg-white transition-all"
                         />
                       </div>
-                      <button className="w-full px-4 py-3 bg-stone-900 hover:bg-amber-500 text-white font-sans-clean font-semibold rounded-xl transition-all">
+                      <Button size="lg" variant="default" className="w-full">
                         Update Password
-                      </button>
+                      </Button>
                     </div>
                   </div>
 
@@ -589,9 +592,9 @@ export default function DashboardPage() {
                     <p className="font-sans-clean text-sm text-red-600 mb-6">
                       Permanently delete your account and all associated data. This action cannot be undone.
                     </p>
-                    <button className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-sans-clean font-semibold rounded-xl transition-all">
+                    <Button size="lg" variant="destructive" className="w-full">
                       Delete Account
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
