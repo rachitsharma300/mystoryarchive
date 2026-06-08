@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ChevronLeft, Check, Star, Shield, Truck, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const productData: Record<string, {
   name: string;
