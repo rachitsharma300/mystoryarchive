@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Filter, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const categories = ["All", "Magazine", "Album", "Reels", "Frame"];
 
@@ -142,29 +143,27 @@ export default function ShopPage() {
           <div className="flex items-center gap-2 overflow-x-auto">
             <Filter size={16} className="text-stone-400 shrink-0" />
             {categories.map((cat) => (
-              <button
+              <Button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={
-                  "px-4 py-1.5 rounded-full font-sans-clean text-sm font-medium whitespace-nowrap transition-all duration-200 " +
-                  (activeCategory === cat
-                    ? "bg-amber-500 text-white shadow-md"
-                    : "bg-stone-100 text-stone-600 hover:bg-stone-200")
-                }
+                variant={activeCategory === cat ? "default" : "secondary"}
+                size="sm"
               >
                 {cat}
-              </button>
+              </Button>
             ))}
           </div>
 
           <div className="relative shrink-0">
-            <button
+            <Button
               onClick={() => setShowSort(!showSort)}
-              className="flex items-center gap-2 px-4 py-1.5 bg-stone-100 hover:bg-stone-200 rounded-full font-sans-clean text-sm text-stone-600 transition-all"
+              variant="secondary"
+              size="sm"
+              className="flex items-center gap-2"
             >
               {sortBy}
               <ChevronDown size={14} className={showSort ? "rotate-180 transition-transform" : "transition-transform"} />
-            </button>
+            </Button>
             {showSort && (
               <div className="absolute right-0 top-10 bg-white border border-stone-100 rounded-xl shadow-xl overflow-hidden z-50 w-48">
                 {sortOptions.map((opt) => (
@@ -240,12 +239,11 @@ export default function ShopPage() {
                       {"₹" + p.originalPrice.toLocaleString()}
                     </span>
                   </div>
-                  <Link
-                    href={"/product/" + p.slug}
-                    className="px-5 py-2.5 bg-stone-900 group-hover:bg-amber-500 text-white font-sans-clean text-sm font-semibold rounded-xl transition-all duration-300"
-                  >
-                    Order Now
-                  </Link>
+                  <Button asChild size="lg" variant="default">
+                    <Link href={"product/" + p.slug}>
+                      Order Now
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </motion.div>
