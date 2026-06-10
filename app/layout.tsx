@@ -3,6 +3,7 @@ import { Playfair_Display, Cormorant_Garamond, DM_Sans } from "next/font/google"
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import { Toaster } from "react-hot-toast";
 
 const playfair = Playfair_Display({
@@ -53,6 +54,7 @@ export default function RootLayout({
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
+        <WhatsAppButton />
         <Toaster
           position="top-right"
           toastOptions={{
