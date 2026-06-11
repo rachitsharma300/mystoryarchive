@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+### Frontend (Next.js) ###
 # dependencies
 /node_modules
 /.pnp
@@ -20,9 +21,9 @@
 # production
 /build
 
-# misc
-.DS_Store
-*.pem
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 
 # debug
 npm-debug.log*
@@ -30,12 +31,54 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
-
 # vercel
 .vercel
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+### Backend (Java/Maven) ###
+storyceller-backend/target/
+storyceller-backend/.mvn/wrapper/maven-wrapper.jar
+the-story-celler-backend/target/
+the-story-celler-backend/.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+.apt_generated
+.sts4-cache/
+*.iml
+*.iws
+*.ipr
+.springBeans
+
+# NetBeans
+/nbproject/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Environment & Config
+.env
+.env.local
+.env.*.local
+.env*.prod
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Misc
+*.pem
+*.log
+.vscode-test/
+tmp/
+dist/
