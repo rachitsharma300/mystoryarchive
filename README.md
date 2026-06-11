@@ -1,5 +1,8 @@
+<details> <summary><strong>📁 THE STORY CELLER</strong></summary>
+
+  
 ```
-- mystoryarchive/
+- the-story-celler/
   - .gitignore
   - AGENTS.md
   - CLAUDE.md
@@ -78,4 +81,6 @@
     - product.ts
     - user.ts
 
-    ```
+
+```
+    </details>
